@@ -14,7 +14,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: #1e3c15; /* Yedek arka plan */
+            background: #1e3c15;
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -33,7 +33,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             border-bottom: 2px solid #f39c12;
             z-index: 10;
@@ -71,52 +71,31 @@
 
         /* OYUN EKRANI (CANLI ÇİFTLİK VE TAP) */
         #page-tap {
-            /* Canlı Kır ve Çiftlik Arka Planı */
-            background: linear-gradient(to bottom, #7ec0ee 0%, #9ad483 40%, #408c2c 100%);
+            /* Senin yüklediğin o harika köy manzarası arkaplan.jpg burada çalışıyor */
+            background: url('arkaplan.jpg') no-repeat center center;
+            background-size: cover;
             position: relative;
             overflow: hidden;
         }
 
-        /* Arkadaki Çiftlik Evi / Ahır */
-        .barn-bg {
-            position: absolute;
-            top: 25%;
-            left: 15%;
-            width: 100px;
-            height: 80px;
-            background: #c0392b;
-            border-radius: 8px 8px 0 0;
-            border: 3px solid #7f8c8d;
-            opacity: 0.85;
-            z-index: 1;
-        }
-        .barn-bg::before {
-            content: '';
-            position: absolute;
-            top: -25px;
-            left: -5px;
-            width: 104px;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 25px solid #962d22;
-        }
-
-        /* 🏃‍♂️ KOŞAN BUZAĞI ANIMASYONU (ARKA PLAN) */
+        /* 🏃‍♂️ ARKA PLANDA SÜREKLİ KOŞAN KÜÇÜK BUZAĞI ANIMASYONU */
         .calf-bg {
             position: absolute;
-            top: 40%;
-            width: 75px;
-            height: 75px;
+            top: 55%;
+            width: 70px;
+            height: 70px;
             z-index: 2;
-            animation: runCalf 12s linear infinite;
+            animation: runCalf 14s linear infinite;
+            pointer-events: none;
+            border-radius: 50%;
+            object-fit: cover;
         }
         @keyframes runCalf {
-            0% { left: -100px; transform: scaleX(1); }
+            0% { left: -80px; transform: scaleX(1); }
             48% { left: 110%; transform: scaleX(1); }
             50% { left: 110%; transform: scaleX(-1); }
-            98% { left: -100px; transform: scaleX(-1); }
-            100% { left: -100px; transform: scaleX(1); }
+            98% { left: -80px; transform: scaleX(-1); }
+            100% { left: -80px; transform: scaleX(1); }
         }
 
         .score-container {
@@ -132,12 +111,13 @@
             font-size: 15px;
             color: #fff;
             font-weight: bold;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             padding: 4px 12px;
             border-radius: 10px;
             letter-spacing: 1px;
             margin-bottom: 10px;
             z-index: 5;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         /* TIKLAMA ALANI VE GEZİNEN İNEK */
@@ -151,12 +131,12 @@
             z-index: 5;
         }
 
-        /* 🚶‍♂️ SÜREKLİ SALINAN VE YÜRÜYEN ANA İNEK BUTONU */
+        /* SÜREKLİ SALINAN ANA OYUNCU İNEK BUTONU */
         .cow-btn-container {
-            width: 250px;
-            height: 250px;
+            width: 230px;
+            height: 230px;
             border-radius: 50%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 255, 255, 0.5);
             border: 8px solid #f39c12;
             overflow: hidden;
             background: #fff;
@@ -164,11 +144,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: cowWalk 3s ease-in-out infinite alternate;
+            animation: cowWalk 2.5s ease-in-out infinite alternate;
         }
         @keyframes cowWalk {
-            0% { transform: translateY(0) rotate(-3deg); }
-            100% { transform: translateY(-10px) rotate(3deg); }
+            0% { transform: translateY(0) rotate(-4deg); }
+            100% { transform: translateY(-12px) rotate(4deg); }
         }
         .cow-btn-container:active {
             transform: scale(0.88) !important;
@@ -177,16 +157,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
+            object-position: center;
         }
 
         .energy-section {
             width: 90%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(5px);
             padding: 12px 18px;
             border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(243, 156, 18, 0.4);
             margin-bottom: 15px;
             z-index: 5;
         }
@@ -200,7 +180,7 @@
         .progress-bar {
             width: 100%;
             height: 12px;
-            background: #333;
+            background: #222;
             border-radius: 10px;
             overflow: hidden;
         }
@@ -213,7 +193,7 @@
 
         /* DİĞER SAYFALARIN ORTAK ARKA PLANI */
         #page-market, #page-tasks, #page-ref, #page-leader {
-            background: linear-gradient(135deg, #1a2516, #2c3e25);
+            background: linear-gradient(135deg, #131d10, #25351e);
         }
 
         /* LİSTE / KART TASARIMLARI */
@@ -276,7 +256,7 @@
             left: 0;
             width: 100%;
             height: 75px;
-            background: rgba(15, 25, 12, 0.96);
+            background: rgba(10, 18, 8, 0.96);
             backdrop-filter: blur(10px);
             border-top: 2px solid #f39c12;
             display: flex;
@@ -334,15 +314,14 @@
     </div>
 
     <div id="page-tap" class="page active">
-        <div class="barn-bg"></div>
-        <img src="https://i.ibb.co/v4mYgGg/cow-character.jpg" class="calf-bg" alt="Calf">
+        <img src="buzağı.jpg" class="calf-bg" alt="Calf">
 
         <div class="score-container" id="score">0</div>
         <div class="coin-label">$COW PUANI</div>
 
         <div class="click-area" id="clickArea">
             <div class="cow-btn-container">
-                <img src="https://i.ibb.co/v4mYgGg/cow-character.jpg" id="cowImg" alt="Main Cow">
+                <img src="buzağı.jpg" id="cowImg" alt="Main Cow">
             </div>
         </div>
 
@@ -487,7 +466,7 @@
             btn.classList.add('active');
         }
 
-        // TIKLAMA VE +X YEŞİL PARLAMA ANİMASYONU
+        // TIKLAMA VE ANİMASYON
         clickArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (energy >= clickPower) {
@@ -518,7 +497,7 @@
             energyBarEl.style.width = `${pct}%`;
         }
 
-        // ENERJİ DOLMA SİSTEMİ (Saniyede +2)
+        // ENERJİ DOYUM SÜRESİ
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy = Math.min(maxEnergy, energy + 2);
@@ -527,7 +506,7 @@
             }
         }, 1000);
 
-        // MARKET & BOOST SİSTEMİ
+        // MARKET SİSTEMİ
         function buyBoost(type) {
             if (type === 'click' && score >= 500) {
                 score -= 500;
@@ -563,20 +542,20 @@
             }
         }
 
-        // TELEGRAM PAYLAŞIM ENTEGRASYONU
+        // DAVET ENTEGRASYONU
         function shareInvite() {
-            const botUsername = "SizinBotKullaniciAdiniz"; // Kendi bot adını buraya yaz usta
+            const botUsername = "SizinBotKullaniciAdiniz"; 
             const inviteUrl = `https://t.me/${botUsername}?start=ref`;
             const text = "🐮 Cow Coin Canlı Çiftlik oyununa katıl, tıkla ve airdrop kazan!";
             
-            if (tg && tg.initData) {
+            if (tg && tg.openTelegramLink) {
                 tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(text)}`);
             } else {
                 alert("Davet linki kopyalandı!");
             }
         }
 
-        // TON CONNECT BAŞLATICISI
+        // TON CONNECT
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://ton-connect.github.io/demo-manifest.json',
             buttonRootId: 'ton-connect-btn'
