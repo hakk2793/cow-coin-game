@@ -1,0 +1,1 @@
+# cow-coin-game
