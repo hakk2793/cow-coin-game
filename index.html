@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Cow Coin Web3 Game - Canlı Çiftlik Sürümü</title>
+    <title>Cow Coin Web3 Game</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -69,33 +69,13 @@
             display: flex;
         }
 
-        /* OYUN EKRANI (CANLI ÇİFTLİK VE TAP) */
+        /* OYUN EKRANI (ARKA PLAN VE TIKLAMA) */
         #page-tap {
-            /* Senin yüklediğin o harika köy manzarası arkaplan.jpg burada çalışıyor */
+            /* Senin yüklediğin o boş arazi manzarası */
             background: url('arkaplan.jpg') no-repeat center center;
             background-size: cover;
             position: relative;
             overflow: hidden;
-        }
-
-        /* 🏃‍♂️ ARKA PLANDA SÜREKLİ KOŞAN KÜÇÜK BUZAĞI ANIMASYONU */
-        .calf-bg {
-            position: absolute;
-            top: 55%;
-            width: 70px;
-            height: 70px;
-            z-index: 2;
-            animation: runCalf 14s linear infinite;
-            pointer-events: none;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        @keyframes runCalf {
-            0% { left: -80px; transform: scaleX(1); }
-            48% { left: 110%; transform: scaleX(1); }
-            50% { left: 110%; transform: scaleX(-1); }
-            98% { left: -80px; transform: scaleX(-1); }
-            100% { left: -80px; transform: scaleX(1); }
         }
 
         .score-container {
@@ -120,7 +100,7 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* TIKLAMA ALANI VE GEZİNEN İNEK */
+        /* TIKLAMA ALANI */
         .click-area {
             position: relative;
             display: flex;
@@ -131,7 +111,7 @@
             z-index: 5;
         }
 
-        /* SÜREKLİ SALINAN ANA OYUNCU İNEK BUTONU */
+        /* ORTADAKİ DÖNEN/SALINAN BUZAĞI BUTONU */
         .cow-btn-container {
             width: 230px;
             height: 230px;
@@ -314,14 +294,12 @@
     </div>
 
     <div id="page-tap" class="page active">
-        <img src="buzağı.jpg" class="calf-bg" alt="Calf">
-
         <div class="score-container" id="score">0</div>
         <div class="coin-label">$COW PUANI</div>
 
         <div class="click-area" id="clickArea">
             <div class="cow-btn-container">
-                <img src="buzağı.jpg" id="cowImg" alt="Main Cow">
+                <img src="buzağı.jpg" id="cowImg" alt="Calf Button">
             </div>
         </div>
 
@@ -433,7 +411,6 @@
     </div>
 
     <script>
-        // TELEGRAM API KONTROLÜ
         const tg = window.Telegram.WebApp;
         if (tg) {
             tg.expand();
@@ -445,7 +422,6 @@
             }
         }
 
-        // DEĞİŞKENLER VE LOCAL STORAGE
         let score = parseInt(localStorage.getItem('cow_score')) || 0;
         let energy = parseInt(localStorage.getItem('cow_energy')) || 1000;
         let maxEnergy = parseInt(localStorage.getItem('cow_max_energy')) || 1000;
@@ -466,7 +442,6 @@
             btn.classList.add('active');
         }
 
-        // TIKLAMA VE ANİMASYON
         clickArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (energy >= clickPower) {
@@ -497,7 +472,6 @@
             energyBarEl.style.width = `${pct}%`;
         }
 
-        // ENERJİ DOYUM SÜRESİ
         setInterval(() => {
             if (energy < maxEnergy) {
                 energy = Math.min(maxEnergy, energy + 2);
@@ -506,20 +480,19 @@
             }
         }, 1000);
 
-        // MARKET SİSTEMİ
         function buyBoost(type) {
             if (type === 'click' && score >= 500) {
                 score -= 500;
                 clickPower += 1;
                 localStorage.setItem('cow_power', clickPower);
-                alert('Tıklama gücü arttı! Yeni Güç: +' + clickPower);
+                alert('Tıklama gücü arttı!');
             } else if (type === 'energy' && score >= 1000) {
                 score -= 1000;
                 maxEnergy += 500;
                 energy += 500;
                 localStorage.setItem('cow_max_energy', maxEnergy);
                 updateEnergyUI();
-                alert('Maksimum enerji arttı! Yeni Limit: ' + maxEnergy);
+                alert('Maksimum enerji arttı!');
             } else {
                 alert('Yetersiz $COW puanı!');
             }
@@ -527,7 +500,6 @@
             localStorage.setItem('cow_score', score);
         }
 
-        // GÖREVLER
         function doTask(taskId, reward) {
             const btn = document.getElementById(taskId);
             if (btn.innerText === 'Yap') {
@@ -542,12 +514,10 @@
             }
         }
 
-        // DAVET ENTEGRASYONU
         function shareInvite() {
             const botUsername = "SizinBotKullaniciAdiniz"; 
             const inviteUrl = `https://t.me/${botUsername}?start=ref`;
-            const text = "🐮 Cow Coin Canlı Çiftlik oyununa katıl, tıkla ve airdrop kazan!";
-            
+            const text = "Your text here";
             if (tg && tg.openTelegramLink) {
                 tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(inviteUrl)}&text=${encodeURIComponent(text)}`);
             } else {
@@ -555,7 +525,6 @@
             }
         }
 
-        // TON CONNECT
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://ton-connect.github.io/demo-manifest.json',
             buttonRootId: 'ton-connect-btn'
